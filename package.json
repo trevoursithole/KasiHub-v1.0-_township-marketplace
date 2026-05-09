@@ -1,0 +1,15 @@
+{
+  "name": "kasihub",
+  "version": "1.0.0",
+  "description": "KasiHub — Township Marketplace Platform",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix backend && npm install --prefix frontend",
+    "seed": "node backend/src/db/seed.js",
+    "dev:api": "cd backend && node src/server.js",
+    "dev:ui": "cd frontend && npm run dev",
+    "build": "npm run build --prefix frontend",
+    "start": "node backend/src/server.js",
+    "setup": "npm run install:all && npm run seed && npm run build"
+  }
+}

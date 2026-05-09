@@ -1,0 +1,16 @@
+[build]
+builder = "nixpacks"
+buildCommand = "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend"
+
+[deploy]
+startCommand = "node backend/src/server.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "always"
+
+[[services]]
+name = "kasihub"
+
+[services.variables]
+NODE_ENV = "production"
+PORT = "4000"
