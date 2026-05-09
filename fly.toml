@@ -1,0 +1,43 @@
+# Fly.io deployment config for KasiHub
+# Deploy with: fly launch && fly deploy
+
+app = "kasihub"
+primary_region = "jnb"   # Johannesburg — closest to your users
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT     = "4000"
+  DB_PATH  = "/data/kasihub.db"
+
+[http_service]
+  internal_port       = 4000
+  force_https         = true
+  auto_stop_machines  = false   # keep alive on free tier
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type       = "requests"
+    hard_limit = 200
+    soft_limit = 100
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Persistent volume for SQLite database
+[[mounts]]
+  source      = "kasihub_data"
+  destination = "/data"
+
+[checks]
+  [checks.health]
+    grace_period = "10s"
+    interval     = "30s"
+    method       = "GET"
+    path         = "/health"
+    timeout      = "5s"

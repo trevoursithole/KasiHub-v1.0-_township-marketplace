@@ -1,10 +1,31 @@
+# Dependencies
 node_modules/
-dist/
+
+# Build output
+frontend/dist/
+
+# Database (never commit the DB file - it's seeded on deploy)
 *.db
 *.db-shm
 *.db-wal
+
+# Environment (never commit secrets)
 .env
-uploads/*
-!uploads/.gitkeep
+!.env.example
+
+# Uploads (user content)
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# OS / editor
 .DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
 *.log
+npm-debug.log*
+
+# Fly.io
+.fly/
