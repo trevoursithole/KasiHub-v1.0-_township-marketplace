@@ -7,13 +7,15 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - NODE_ENV=production
-      - PORT=4000
-      - DB_PATH=/app/data/kasihub.db
-      - JWT_SECRET=${JWT_SECRET:-kasihub-change-me-in-production}
-      - FRONTEND_URL=http://localhost:4000
+      NODE_ENV: production
+      PORT: 4000
+      DB_PATH: /data/kasihub.db
+      # Set your own secret: docker-compose run -e JWT_SECRET=your-secret up
+      # Or create a .env file next to docker-compose.yml with JWT_SECRET=your-secret
+      JWT_SECRET: ${JWT_SECRET:-kasihub-change-this-secret-before-going-live}
+      FRONTEND_URL: http://localhost:4000
     volumes:
-      - kasihub_data:/app/data
+      - kasihub_data:/data
       - kasihub_uploads:/app/backend/uploads
     restart: unless-stopped
     healthcheck:
@@ -21,7 +23,7 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 10s
+      start_period: 15s
 
 volumes:
   kasihub_data:

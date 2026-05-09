@@ -3,21 +3,20 @@ services:
     name: kasihub
     env: node
     plan: free
-    rootDir: .
     buildCommand: |
       cd backend && npm install
       cd ../frontend && npm install && npm run build
-      cd ../backend && node src/db/seed.js
-    startCommand: cd backend && node src/server.js
+      cd ../backend && NODE_ENV=production node src/db/seed.js
+    startCommand: node backend/src/server.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 10000
-      - key: JWT_SECRET
-        generateValue: true
       - key: DB_PATH
         value: ./kasihub.db
+      - key: JWT_SECRET
+        generateValue: true        # Render auto-generates a secure random value
       - key: FRONTEND_URL
         value: https://kasihub.onrender.com
